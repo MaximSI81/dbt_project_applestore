@@ -1,0 +1,81 @@
+
+models:
+  - name: dim_products
+    description: "Измерение продуктов Apple с категоризацией и сегментацией по цене"
+    columns:
+      - name: product_id
+        description: "Уникальный идентификатор продукта"
+        tests:
+          - not_null
+      - name: product_name
+        description: "Название продукта"
+        tests:
+          - not_null
+      - name: product_type
+        description: "Тип продукта (iPhone, MacBook, etc)"
+      - name: current_price_rub
+        description: "Текущая цена продукта в рублях"
+      - name: product_category
+        description: "Категория продукта"
+      - name: price_segment
+        description: "Ценовой сегмент"
+
+  - name: dim_customers
+    description: "Измерение клиентов Apple"
+    columns:
+      - name: customer_id
+        description: "Уникальный идентификатор клиента"
+        tests:
+          - not_null
+      - name: email
+        description: "Email клиента"
+        tests:
+          - not_null
+      - name: reg_date
+        description: "Дата регистрации клиента"
+        tests:
+          - not_null
+
+  - name: dim_dates
+    description: "Таблица дат для анализа временных рядов"
+    columns:
+      - name: date_id
+        description: "Идентификатор даты"
+        tests:
+          - not_null
+      - name: year
+        description: "Год"
+      - name: month
+        description: "Месяц"
+      - name: is_weekend
+        description: "Признак выходного дня"
+
+  - name: fact_sales
+    description: "Факты продаж Apple продуктов"
+    columns:
+      - name: sale_id
+        description: "Уникальный идентификатор продажи"
+        tests:
+          - not_null
+      - name: order_id
+        description: "Идентификатор заказа"
+      - name: customer_id
+        description: "Идентификатор клиента"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+      - name: product_id
+        description: "Идентификатор продукта"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+      - name: quantity
+        description: "Количество товаров"
+      - name: total_amount
+        description: "Общая сумма продажи"
+      - name: net_revenue
+        description: "Чистая выручка (за вычетом отмен)"

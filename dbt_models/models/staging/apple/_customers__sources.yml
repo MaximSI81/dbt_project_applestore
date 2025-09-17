@@ -1,0 +1,12 @@
+sources:
+  - name: data_db_src
+    database: apple_dwh
+    schema: data_db_src
+    tables:
+      - name: customers
+        description: "Данные о клиентах Apple"
+      - name: sales
+        description: "Данные о продажах Apple"
+      - name: products
+        description: "Справочник продуктов Apple"
+  

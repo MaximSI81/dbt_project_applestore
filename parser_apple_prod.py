@@ -22,11 +22,12 @@ service = Service(ChromeDriverManager().install())
 
 
 # Без прокси
-
+# Парсим applestore и сохраняем актуальные цены на продукцию apple
 chrome_options = Options()
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
+chrome_options.add_argument('--disable-gpu')
 with webdriver.Chrome(service=service, options=chrome_options) as driver:
     driver.set_page_load_timeout(100)  # 30 секунд на загрузку страницы
     driver.implicitly_wait(10)  # 10 секунд на поиск элементов
@@ -135,6 +136,7 @@ def generate_apple_data(num_sales):
             'reg_date': fake.date_between('-2y')
         })
     
+    # Подготовка данных товаров
     products = []
 
     for product in products_apple:
@@ -229,10 +231,10 @@ customers_df.to_parquet('s3_storage/apple_customers.parquet', index=False, engin
 
 
 
-
-'''def upload_to_minio(file, name):
+# Загружаем в S3
+def upload_to_minio(file, name):
     s3 = boto3.client('s3',
-        endpoint_url='http://localhost:9000',
+        endpoint_url='http://localhost:9005',
         aws_access_key_id=os.getenv('S3_ACCESS_KEY'),
         aws_secret_access_key=os.getenv('S3_SECRET_ACCESS_KEY'),)
 
@@ -246,4 +248,4 @@ customers_df.to_parquet('s3_storage/apple_customers.parquet', index=False, engin
 
 upload_to_minio('s3_storage/apple_sales.parquet', 'apple_sales.parquet')
 upload_to_minio('s3_storage/apple_products.parquet', 'apple_products.parquet')
-upload_to_minio('s3_storage/apple_customers.parquet', 'apple_customers.parquet')'''
+upload_to_minio('s3_storage/apple_customers.parquet', 'apple_customers.parquet')
