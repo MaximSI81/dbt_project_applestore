@@ -1,0 +1,12 @@
+apache-airflow-providers-airbyte[http]==3.2.0
+apache-airflow-providers-airbyte==3.2.0
+apache-airflow==2.10.5
+python-dotenv
+boto3
+selenium
+webdriver-manager
+fake-useragent
+Faker
+pyarrow
+dbt-postgres
+lxml
