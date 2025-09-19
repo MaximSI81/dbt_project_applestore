@@ -1,0 +1,12 @@
+dbt_models:
+  outputs:
+    dev:
+      dbname: apple_dwh
+      host: postgres_dwh
+      pass: postgres
+      port: 5432
+      schema: intermediate
+      threads: 2
+      type: postgres
+      user: postgres
+  target: dev

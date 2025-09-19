@@ -28,6 +28,8 @@ x-airflow-common: &airflow-common
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     - ${AIRFLOW_PROJ_DIR:-.}/scripts:/opt/airflow/scripts
+    - ./dbt_models:/opt/airflow/dbt
+    - ./profile:/opt/airflow/.dbt
 
   depends_on:
     &airflow-common-depends-on

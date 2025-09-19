@@ -44,10 +44,15 @@ with webdriver.Chrome(service=service, options=chrome_options) as driver:
         except Exception as e:
             print(f"⚠️  Другая ошибка: {e}")
             break
+    driver.implicitly_wait(0)
     for elem in driver.find_elements('xpath', '//div[@class="item"]'):
-        products_apple.append((elem.find_element('xpath', './/div[@class="name"]/a').text,
-                                      elem.find_element('xpath', './/div[@class="current current--sale"]').text))
-        print(products_apple[-1])
+        try:
+            name_elem = elem.find_element('xpath', './/div[@class="name"]/a').text
+            price_elem = elem.find_element('xpath', './/div[@class="v4 current current--sale"]').text
+            products_apple.append((name_elem, price_elem))
+            print(products_apple[-1])
+        except NoSuchElementException:
+            continue
 
 def product_id(string):
     id_str = 1
@@ -91,6 +96,7 @@ def color(s):
     return "white"
 
 apple_release_years = {
+    "iPhone 12": '2020',
     "iPhone 13": '2021',
     "iPhone SE": '2022',
     "iPhone 14": '2022',
