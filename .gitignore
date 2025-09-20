@@ -7,3 +7,4 @@
 dbt_models/target/
 dbt_models/dbt_packages/
 dbt_models/logs/
+dags/__pycache__/
