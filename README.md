@@ -97,8 +97,7 @@ pip install -r requirements.txt
 docker compose build
 docker compose up -d
 ```
-4. **Предварительно создаем к БД apple_db** 
-  **сначала создаем БД apple_dwh и открываем sql редактор в этой БД и выполняем дальнейший скрипт**
+4. **Предварительно создаем БД apple_dwh и открываем sql редактор в этой БД и выполняем дальнейший скрипт**
 
 ```sql
 select * from pg_catalog.pg_available_extensions;
