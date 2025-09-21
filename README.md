@@ -69,6 +69,7 @@ graph TB
 ### 🔹 Оркестрация
 - **Airflow** - управление всем ETL-пайплайном
 - **DAGs** - автоматизация выполнения задач
+
 ## Предварительно создаем к БД apple_db
 
 #### сначала создаем БД apple_dwh и открываем sql редактор в этой БД и выполняем дальнейший скрипт
@@ -101,3 +102,63 @@ import foreign schema public from server data_db_pg into data_db_src;
 git clone <repository-url>
 cd appstore-analytics-pipeline
 ```
+2. **Выполняем команду**
+```bash
+# Создание виртуального окружения
+python -m venv venv
+
+# Активация (Windows)
+venv\Scripts\activate
+
+# Активация (Linux/Mac)
+source venv/bin/activate
+
+# Установка зависимостей
+pip install -r requirements.txt
+```
+3. **Выполняем команды для сборки docker compose**
+```bash
+docker compose build
+docker compose up -d
+```
+4. **Запускае скрипт parser_apple_prod.py**
+
+```bash
+    python parser_apple_prod.py
+```
+5. **Создаем profiles.yml**
+```bash
+# Создаем директорию для dbt (если еще не создана)
+mkdir -p ~/.dbt/
+
+# Создаем файл profiles.yml
+touch ~/.dbt/profiles.yml
+```
+6. **Добавьте в файл следующую конфигурацию**
+```yml
+dbt_models:
+  outputs:
+    dev:
+      dbname: apple_dwh
+      host: localhost
+      pass: postgres
+      port: 5433
+      schema: intermediate
+      threads: 2
+      type: postgres
+      user: postgres
+  target: dev
+
+```
+7. **Создаем подключения в airbyte**
+8. **Создаем подключения к airbyte в airflow**
+9. **В dag airbyte_conn_to_pg.py меняем connection_id на свои**
+
+```python
+# ДОЛЖНО БЫТЬ 3 РАЗНЫХ CONNECTION_ID!
+PRODUCTS_CONNECTION_ID = 'b5785a9b-fee9-4912-92d4-3e4b4abb06e5' # меняем на свои
+SALES_CONNECTION_ID = 'a4df1c6f-fae5-4cab-9635-ec16f571da7e'  # меняем на свои
+CUSTOMERS_CONNECTION_ID = '1b6dc6c4-4f7d-4644-bfc5-f3fdfda6540a' # меняем на свои
+
+```
+10. **Запускаем даги**
