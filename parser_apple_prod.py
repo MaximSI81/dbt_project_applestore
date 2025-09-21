@@ -126,22 +126,25 @@ def get_model(s):
     return model
 
 
-fake = Faker('ru_RU')
+fake = Faker()
 
 def generate_apple_data(num_sales):
     # Генерация покупателей
     customers = []
     
-    for i in range(1000):
+    for _ in range(25000):
+        profile = fake.profile()
+        first_name = profile['name'].split()[0]
+        last_name = profile['name'].split()[1]
         customers.append({
             'customer_id': f'cust_{uuid.uuid4().hex[:8]}',
-            'first_name': fake.first_name(),
-            'last_name': fake.last_name(),
-            'email': fake.email(),
+            'first_name': first_name,
+            'last_name': last_name,
+            'email': profile["mail"],
             'city': fake.city(),
-            'reg_date': fake.date_between('-2y')
+            'reg_date': fake.date_between('-2y'),
         })
-    
+        
     # Подготовка данных товаров
     products = []
 
@@ -203,7 +206,7 @@ def generate_apple_data(num_sales):
 
     # Генерация продаж
     sales = []
-    for i in range(num_sales):
+    for _ in range(num_sales):
         product = np.random.choice(products)
         customer = np.random.choice(customers)
         
@@ -226,7 +229,7 @@ def generate_apple_data(num_sales):
 
 
 # Генерация данных
-sales_df, products_df, customers_df = generate_apple_data(50000)
+sales_df, products_df, customers_df = generate_apple_data(25000)
 
 
 # Сохраняем в parquet

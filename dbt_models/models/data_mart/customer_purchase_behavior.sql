@@ -7,7 +7,7 @@ WITH customer_stats AS (
         c.last_name,
         c.city,
         c.years_as_customer,
-        COUNT(s.sale_id) as total_orders,
+        COUNT(DISTINCT s.sale_id) as total_orders,
         SUM(s.quantity) as total_items,
         SUM(s.net_revenue) as total_spent,
         AVG(s.net_revenue) as avg_order_value,

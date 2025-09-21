@@ -1,0 +1,99 @@
+version: 2
+
+models:
+  - name: sales_by_product_category
+    description: "Анализ продаж по продуктам и категориям с детализацией по месяцам"
+    columns:
+      - name: product_type
+        description: "Тип продукта (iPhone, MacBook, iPad, etc)"
+      - name: product_category
+        description: "Категория продукта (Мобильные, Компьютеры, Планшеты, Аксессуары)"
+      - name: model
+        description: "Конкретная модель продукта"
+      - name: price_segment
+        description: "Ценовой сегмент (Бюджетный, Средний, Премиум)"
+      - name: sales_month
+        description: "Месяц продаж (округление до первого числа месяца)"
+      - name: total_orders
+        description: "Общее количество заказов в месяце"
+        tests:
+          - not_null
+      - name: total_quantity
+        description: "Общее количество проданных товаров"
+      - name: total_revenue
+        description: "Суммарная выручка за месяц"
+        tests:
+          - not_null
+      - name: avg_price
+        description: "Средняя цена товара в категории"
+      - name: cancelled_orders
+        description: "Количество отмененных заказов"
+      - name: cancellation_rate
+        description: "Процент отмен от общего числа заказов"
+
+  - name: customer_purchase_behavior
+    description: "Анализ поведения клиентов и сегментация по покупательской активности"
+    columns:
+      - name: customer_id
+        description: "Уникальный идентификатор клиента"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: "Имя клиента"
+      - name: last_name
+        description: "Фамилия клиента"
+      - name: city
+        description: "Город клиента"
+      - name: years_as_customer
+        description: "Количество лет с момента регистрации клиента"
+      - name: total_orders
+        description: "Общее количество заказов клиента"
+        tests:
+          - not_null
+      - name: total_items
+        description: "Общее количество купленных товаров"
+      - name: total_spent
+        description: "Общая сумма потраченных средств"
+        tests:
+          - not_null
+      - name: avg_order_value
+        description: "Средний чек клиента"
+      - name: first_order_date
+        description: "Дата первого заказа клиента"
+      - name: last_order_date
+        description: "Дата последнего заказа клиента"
+      - name: unique_products
+        description: "Количество уникальных товаров в покупках"
+      - name: unique_categories
+        description: "Количество уникальных категорий товаров"
+      - name: customer_segment
+        description: "Сегмент клиента (VIP, Лояльный, Активный, Новый)"
+      - name: purchase_frequency
+        description: "Частота покупок (Частый, Периодический, Однократный)"
+
+  - name: monthly_sales_trends
+    description: "Общие тренды продаж по месяцам с разбивкой по продуктам, городам и способам оплаты"
+    columns:
+      - name: sales_month
+        description: "Месяц продаж"
+        tests:
+          - not_null
+      - name: product_type
+        description: "Тип продукта"
+      - name: city
+        description: "Город доставки"
+      - name: payment_method
+        description: "Способ оплаты (card, e_wallet, cash)"
+      - name: total_orders
+        description: "Общее количество заказов в месяце"
+      - name: total_quantity
+        description: "Общее количество товаров"
+      - name: total_revenue
+        description: "Общая выручка за месяц"
+        tests:
+          - not_null
+      - name: avg_order_value
+        description: "Средняя сумма заказа"
+      - name: cancelled_orders
+        description: "Количество отмененных заказов"
